@@ -1,0 +1,103 @@
+--- 
+
+- hosts: mate
+  remote_user: root
+  tasks: 
+
+    - name: Disable dpkg fsync
+      shell: test -e /etc/dpkg/dpkg.cfg.d/unsafe-io || echo force-unsafe-io > /etc/dpkg/dpkg.cfg.d/unsafe-io
+
+    - name: Install dirmngr
+      apt:
+        name: dirmngr
+        state: present
+
+    - name: Add x2go user
+      user:
+        name: x2go
+        comment: X2Go User
+        group: users
+        groups: sudo
+        generate_ssh_key: yes
+        shell: /bin/bash
+
+    - name: Add x2go key
+      apt_key:
+        id: E1F958385BFE2B6E
+        keyserver: keyserver.ubuntu.com
+
+    - name: Add x2go repo
+      apt_repository: 
+        repo: deb http://packages.x2go.org/debian stretch extras main
+        state: present
+
+    - name: Upgrade
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install required debs
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - sudo
+        - mate-desktop
+        - x2goserver
+        - mate-session-manager
+        - mate-applets
+        - mate-backgrounds
+        - mate-control-center
+        - mate-desktop-environment
+        - dconf-cli
+        - firefox-esr
+
+    - name: Fix sudoers
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: "^%sudo"
+        line: "%sudo ALL=NOPASSWD: ALL"
+    
+    - name: Copy check_wallpaper.sh
+      copy:
+        src: files/check_wallpaper.sh
+        dest: /usr/local/bin
+        mode: "755"
+        owner: root
+
+    - name: Copy autostart
+      file: 
+        path: /home/x2go/.config/autostart
+        recurse: yes
+        state: directory
+        owner: x2go
+
+    - name: Desktop
+      file:
+        path: /home/x2go/Desktop
+        recurse: yes
+        state: directory
+        owner: x2go
+        group: users
+
+    - name: Copy check_wallpaper.desktop
+      copy:
+        src: files/check_wallpaper.desktop
+        dest: /home/x2go/.config/autostart
+        owner: x2go
+        group: users
+
+    - name: Copy wallpaper.jpg
+      copy:
+        src: files/wallpaper.jpg
+        dest: /home/x2go
+        owner: x2go
+        group: users
+
+    - name: Adjust owner
+      file:
+        path: /home/x2go
+        recurse: yes
+        owner: x2go
+        group: users
