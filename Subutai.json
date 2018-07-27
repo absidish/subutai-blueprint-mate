@@ -1,7 +1,7 @@
 {
     "name": "${environmentName}",
     "description": "Mate Desktop",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "author": "https://github.com/lbthomsen",
     "containers": [
         {
@@ -14,7 +14,7 @@
     "peer-criteria": [
         {
             "name": "MATE-GROUP",
-            "max-price": "25"
+            "max-price": "100"
         }
     ],
     "ansible-configuration": {
