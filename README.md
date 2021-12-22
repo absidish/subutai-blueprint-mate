@@ -1,2 +1,2 @@
-# subutai-blueprint-mate
+# Subutai Mate Blueprint
 Mate Desktop
