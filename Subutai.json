@@ -17,7 +17,7 @@
         }
     ],
     "ansible-configuration": {
-        "source-url": "https://github.com/lbthomsen/subutai-blueprint-mate/archive/master.zip",
+        "source-url": "https://github.com/absidish/subutai-blueprint-mate/archive/refs/heads/master.zip",
         "ansible-playbook": "site.yml",
         "groups": [
             {
