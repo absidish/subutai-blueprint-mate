@@ -28,7 +28,7 @@
 
     - name: Add x2go repo
       apt_repository: 
-        repo: deb http://packages.x2go.org/debian stretch extras main
+        repo: deb http://packages.x2go.org/debian bullseye extras main
         state: present
 
     - name: Upgrade
