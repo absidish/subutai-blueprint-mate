@@ -2,10 +2,20 @@
 
 - hosts: mate
   remote_user: root
+  vars:
+    ansible_python_interpreter: /usr/bin/python
   tasks: 
+    - name: Install python3
+      shell: apt install -y python3
+      vars:
+        ansible_python_interpreter: /usr/bin/python
 
-    - name: Disable dpkg fsync
-      shell: test -e /etc/dpkg/dpkg.cfg.d/unsafe-io || echo force-unsafe-io > /etc/dpkg/dpkg.cfg.d/unsafe-io
+
+- hosts: mate
+  remote_user: root
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks: 
 
     - name: Install dirmngr
       apt:
@@ -38,19 +48,18 @@
 
     - name: Install required debs
       apt:
-        name: "{{ item }}"
+        name: 
+          - sudo
+          - mate-desktop
+          - x2goserver
+          - mate-session-manager
+          - mate-applets
+          - mate-backgrounds
+          - mate-control-center
+          - mate-desktop-environment
+          - dconf-cli
+          - firefox-esr
         state: present
-      with_items:
-        - sudo
-        - mate-desktop
-        - x2goserver
-        - mate-session-manager
-        - mate-applets
-        - mate-backgrounds
-        - mate-control-center
-        - mate-desktop-environment
-        - dconf-cli
-        - firefox-esr
 
     - name: Fix sudoers
       lineinfile:
