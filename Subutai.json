@@ -6,7 +6,7 @@
     "containers": [
         {
             "hostname": "mate",
-            "template": "debian-bullseye",
+            "template": "debian-stretch",
             "peer-criteria": "MATE-GROUP",
             "size": "${containerSize}"
         }

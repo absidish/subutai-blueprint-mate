@@ -2,19 +2,6 @@
 
 - hosts: mate
   remote_user: root
-  vars:
-    ansible_python_interpreter: /usr/bin/python
-  tasks: 
-    - name: Install python3
-      shell: apt update && apt install -y python3
-      vars:
-        ansible_python_interpreter: /usr/bin/python
-
-
-- hosts: mate
-  remote_user: root
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
   tasks: 
 
     - name: Install dirmngr
@@ -38,7 +25,7 @@
 
     - name: Add x2go repo
       apt_repository: 
-        repo: deb http://packages.x2go.org/debian bullseye extras main
+        repo: deb http://packages.x2go.org/debian stretch extras main
         state: present
 
     - name: Upgrade
